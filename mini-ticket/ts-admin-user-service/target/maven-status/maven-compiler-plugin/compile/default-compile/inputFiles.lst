@@ -1,0 +1,10 @@
+/app/ts-admin-user-service/src/main/java/adminuser/controller/AdminUserController.java
+/app/ts-admin-user-service/src/main/java/adminuser/entity/DocumentType.java
+/app/ts-admin-user-service/src/main/java/adminuser/AdminUserApplication.java
+/app/ts-admin-user-service/src/main/java/adminuser/dto/UserDto.java
+/app/ts-admin-user-service/src/main/java/adminuser/service/AdminUserServiceImpl.java
+/app/ts-admin-user-service/src/main/java/adminuser/entity/Account.java
+/app/ts-admin-user-service/src/main/java/adminuser/service/AdminUserService.java
+/app/ts-admin-user-service/src/main/java/adminuser/entity/Gender.java
+/app/ts-admin-user-service/src/main/java/adminuser/config/SecurityConfig.java
+/app/ts-admin-user-service/src/main/java/adminuser/entity/User.java

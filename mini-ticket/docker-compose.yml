@@ -1,0 +1,145 @@
+version: "3"
+
+services:
+  #  rabbitmq:
+  #    image: rabbitmq:management
+  #    ports:
+  #      - 5672:5672
+  #      - 15672:15672
+  #    networks:
+  #      - my-network
+
+  # kafka:
+  #   container_name: kafka
+  #   image: spotify/kafka:latest
+  #   ports:
+  #    - 2181:2181
+  #    - 9092:9092
+  #   networks:
+  #     - my-network
+
+  #  zipkin:
+  #    image: openzipkin/zipkin
+  #    ports:
+  #      - 9411:9411
+  #    networks:
+  #      - my-network
+
+
+
+
+  otel-collector:
+    image: otel/opentelemetry-collector:0.38.0
+    container_name: otel-collector
+    command: ["--config=/etc/otelcol/config.yaml"]
+    ports:
+      - "4317:4317"
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otelcol/config.yaml
+    networks:
+      - my-network
+
+
+
+
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    networks:
+      - my-network
+
+  ts-ui-dashboard:
+    build: ts-ui-dashboard
+    image: ${IMG_REPO}/ts-ui-dashboard:${IMG_TAG}
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - my-network
+
+  ts-auth-service:
+    build: ts-auth-service
+    image: ${IMG_REPO}/ts-auth-service:${IMG_TAG}
+    restart: always
+    ports:
+      - 12340:12340
+    environment:
+      JAVA_TOOL_OPTIONS: "-javaagent:/opentelemetry/opentelemetry-javaagent.jar"
+
+      OTEL_INSTRUMENTATION_LOGBACK_MDC_ENABLED: "true"
+      
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4317
+    networks:
+      - my-network
+    
+
+  ts-auth-mongo:
+    image: mongo:3.6
+    networks:
+      - my-network
+
+  ts-user-service:
+    build: ts-user-service
+    image: ${IMG_REPO}/ts-user-service:${IMG_TAG}
+    restart: always
+    ports:
+      - 12342:12342
+    networks:
+      - my-network
+
+  ts-user-mongo:
+    image: mongo:3.6
+    networks:
+      - my-network
+
+  ts-verification-code-service:
+    build: ts-verification-code-service
+    image: ${IMG_REPO}/ts-verification-code-service:${IMG_TAG}
+    restart: always
+    ports:
+      - 15678:15678
+    networks:
+      - my-network
+
+  ts-account-mongo:
+    image: mongo:3.6
+    networks:
+      - my-network
+
+
+
+  ts-assurance-service:
+        build: ts-assurance-service
+        image: ${IMG_REPO}/ts-assurance-service:${IMG_TAG}
+        restart: always
+        ports:
+          - 18888:18888
+        networks:
+          - my-network
+
+  ts-assurance-mongo:
+    image: mongo:3.6
+    networks:
+      - my-network
+
+
+
+  ts-admin-user-service:
+    build: ts-admin-user-service
+    image: ${IMG_REPO}/ts-admin-user-service:${IMG_TAG}
+    restart: always
+    ports:
+      - 16115:16115
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    networks:
+      - my-network
+
+
+networks:
+  my-network:
+    # driver: overlay
+    driver: bridge

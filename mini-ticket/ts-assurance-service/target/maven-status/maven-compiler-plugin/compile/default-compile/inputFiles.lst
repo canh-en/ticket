@@ -1,0 +1,11 @@
+/app/ts-assurance-service/src/main/java/assurance/init/InitData.java
+/app/ts-assurance-service/src/main/java/assurance/AssuranceApplication.java
+/app/ts-assurance-service/src/main/java/assurance/config/SecurityConfig.java
+/app/ts-assurance-service/src/main/java/assurance/entity/AssuranceType.java
+/app/ts-assurance-service/src/main/java/assurance/service/AssuranceService.java
+/app/ts-assurance-service/src/main/java/assurance/service/AssuranceServiceImpl.java
+/app/ts-assurance-service/src/main/java/assurance/repository/AssuranceRepository.java
+/app/ts-assurance-service/src/main/java/assurance/entity/PlainAssurance.java
+/app/ts-assurance-service/src/main/java/assurance/controller/AssuranceController.java
+/app/ts-assurance-service/src/main/java/assurance/entity/AssuranceTypeBean.java
+/app/ts-assurance-service/src/main/java/assurance/entity/Assurance.java
