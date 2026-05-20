@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  nezha:
+    container_name: nezha
+
+    image: nezha:latest
+
+    ports:
+      - "6985:6985"
+
+    restart: unless-stopped
+
+    command: >
+      python main.py --ns ts --level service
+
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    external: true
